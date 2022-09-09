@@ -19,9 +19,12 @@ public:
 	}
 
 	const Value& get(const Key& key) const override {
-		if (hashTableElements.find(key) == hashTableElements.end())
+		try {
+			return hashTableElements.at(key);
+		}
+		catch (out_of_range& ex) {
 			throw NotValidKey<Key>(key, "Unable to get value by key: ");
-		return hashTableElements.find(key)->second;
+		}
 	}
 
 	void set(const Key& key, const Value& value) override {
